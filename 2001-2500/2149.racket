@@ -1,0 +1,23 @@
+(define/contract (split-pos-neg nums)
+    (-> (listof exact-integer?) (values (listof exact-integer?) (listof exact-integer?)))
+        (cond
+            [(empty? nums) (values empty empty)]
+            [else 
+                (let-values ([(pos neg) (split-pos-neg (rest nums))]
+                [(i) (first nums)])
+                    (if (positive? i) (values (cons i pos) neg)
+                    (values pos (cons i neg))))]))
+
+(define/contract (combine-pos-neg lst1 lst2)
+(-> (listof exact-integer?) (listof exact-integer?) (listof exact-integer?))
+    (cond 
+        [(and (empty? lst1) (empty? lst2)) empty]
+        [(empty? lst1) lst2]
+        [else (cons (first lst1) (combine-pos-neg lst2 (rest lst1))) ]
+    )
+)
+
+(define/contract (rearrange-array nums)
+  (-> (listof exact-integer?) (listof exact-integer?))
+  (let-values ([(pos neg) (split-pos-neg nums)])
+    (combine-pos-neg pos neg)))
