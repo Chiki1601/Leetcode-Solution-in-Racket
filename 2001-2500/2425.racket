@@ -1,0 +1,5 @@
+(define/contract (xor-all-nums nums1 nums2)
+  (-> (listof exact-integer?) (listof exact-integer?) exact-integer?)
+  (define ans1 (if (odd? (length nums2)) (apply bitwise-xor nums1) 0))
+  (define ans2 (if (odd? (length nums1)) (apply bitwise-xor nums2) 0))
+  (bitwise-xor ans1 ans2))
