@@ -1,0 +1,8 @@
+(define/contract (max-ascending-sum nums)
+  (-> (listof exact-integer?) exact-integer?)
+  (let loop ([nums nums] [max-sum (first nums)] [cur-sum (first nums)])
+    (cond
+      [(empty? (rest nums)) max-sum]
+      [(< (first nums) (second nums)) 
+       (loop (rest nums) (max max-sum (+ cur-sum (second nums))) (+ cur-sum (second nums)))]
+      [else (loop (rest nums) (max max-sum (second nums)) (second nums))])))
