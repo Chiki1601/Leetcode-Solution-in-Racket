@@ -1,0 +1,7 @@
+(define/contract (check-powers-of-three n)
+  (-> exact-integer? boolean?)
+  (let loop ((num n))
+    (cond
+      [(zero? num) #t]
+      [(= (modulo num 3) 2) #f]
+      [else (loop (quotient num 3))])))
