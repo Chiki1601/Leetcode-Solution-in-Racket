@@ -1,0 +1,17 @@
+(define/contract (number-of-beams bank)
+  (-> (listof string?) exact-integer?)
+  (let ([counter
+         (λ (s)
+           (let ([d (make-hash)])
+             (for ([ch s])
+               (hash-update! d ch add1 0))
+             d))])
+    (let loop ([L (cdr bank)] [prev (counter (car bank))])
+      (if (null? L)
+          0
+          (let ([c (counter (car L))])
+            (if (zero? (hash-ref c #\1 0))
+                (loop (cdr L) prev)
+                (+ (* (hash-ref c #\1 0)
+                      (hash-ref prev #\1 0))
+                   (loop (cdr L) c))))))))
